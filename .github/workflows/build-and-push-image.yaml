@@ -32,6 +32,7 @@ jobs:
       id: spring-boot-app
       run: | 
         printenv
+        cd spring-boot-app
         docker build --platform "linux/amd64" -t utsavgarg007/spring-boot-app:v1.1.1 .
         echo "::set-output name=IMAGE::utsavgarg007/spring-boot-app:v1.1.1"
     - name: Run Trivy vulnerability scanner
