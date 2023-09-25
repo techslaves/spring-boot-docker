@@ -28,21 +28,17 @@ jobs:
       run: |
         cd spring-boot-app
         mvn -B package --file pom.xml
-    - name: Build and push docker image to DockerHub
-      id: spring-boot-app
-      run: | 
-        printenv
-        cd spring-boot-app
-        docker build --platform "linux/amd64" -t utsavgarg007/spring-boot-app:v1.1.1 .
-        echo "::set-output name=IMAGE::utsavgarg007/spring-boot-app:v1.1.1"
-    - name: Run Trivy vulnerability scanner
-      uses: aquasecurity/trivy-action@master
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
       with:
-          image-ref: '${{ steps.build-image.outputs.IMAGE }}'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          output: ${{ steps.date.outputs.date }}
-          severity: 'CRITICAL,HIGH'
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+         context: spring-boot-app
+         push: true
+         tags: utsavgarg007/spring-boot-app:latest
       
