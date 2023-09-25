@@ -44,6 +44,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
          context: spring-boot-app
+         platforms: linux/amd64,linux/arm64
          push: true
          tags: utsavgarg007/spring-boot-app:latest
          labels: ${{ steps.meta.outputs.labels }}
