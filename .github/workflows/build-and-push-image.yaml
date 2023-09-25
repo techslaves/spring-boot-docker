@@ -29,9 +29,9 @@ jobs:
     - name: Build and push docker image to DockerHub
       id: build-image
       run: | 
-        VERSION_READABLE=$(git describe --tag)
-        docker build --platform "linux/amd64" -t utsavgarg007/docker-image:$VERSION_READABLE .
-        echo "::set-output name=IMAGE::utsavgarg007/docker-image:$VERSION_READABLE"
+        cd spring-boot-app
+        docker build --platform "linux/amd64" -t utsavgarg007/docker-image:$FIX_VERSION .
+        echo "::set-output name=IMAGE::utsavgarg007/docker-image:$FIX_VERSION"
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
       with:
