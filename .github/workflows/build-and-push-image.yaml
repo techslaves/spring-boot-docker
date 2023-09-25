@@ -25,11 +25,12 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: |
+        cd spring-boot-app
+        mvn -B package --file pom.xml
     - name: Build and push docker image to DockerHub
       id: build-image
       run: | 
-        cd spring-boot-app
         docker build --platform "linux/amd64" -t utsavgarg007/docker-image:$FIX_VERSION .
         echo "::set-output name=IMAGE::utsavgarg007/docker-image:$FIX_VERSION"
     - name: Run Trivy vulnerability scanner
