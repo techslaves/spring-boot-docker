@@ -17,6 +17,6 @@ public class SpringBootAppApplication {
 
 	@GetMapping()
 	public String getGreeting(){
-		return "Hello from spring boot app merge";
+		return "Hello from spring app";
 	}
 }
