@@ -21,6 +21,6 @@ jobs:
       uses: atlassian/gajira-create@v3
       with:
         project: CR
-        issuetype: Story
+        issuetype: Task
         summary: "Test"
         description: "Description"
