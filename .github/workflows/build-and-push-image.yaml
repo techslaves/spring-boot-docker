@@ -28,6 +28,9 @@ jobs:
       run: |
         cd spring-boot-app
         mvn -B package --file pom.xml
+  docker:
+    runs-on: ubuntu-latest
+    steps:
     - name: Docker meta
       id: meta
       uses: docker/metadata-action@v5
@@ -48,5 +51,12 @@ jobs:
          push: true
          tags: utsavgarg007/spring-boot-app:latest
          labels: ${{ steps.meta.outputs.labels }}
+  deploy-QA:
+    runs-on: ubuntu-latest
+    needs: docker
+    steps:
+    - name: Test
+      run: |
+        echo ${{ steps.meta.outputs.labels }}
          
       
