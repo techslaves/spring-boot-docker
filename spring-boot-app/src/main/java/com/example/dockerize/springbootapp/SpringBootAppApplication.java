@@ -18,6 +18,6 @@ public class SpringBootAppApplication {
 	@GetMapping()
 	public String getGreeting(){
 
-		return "Hello app JIRA";
+		return "Hello app test JIRA";
 	}
 }
