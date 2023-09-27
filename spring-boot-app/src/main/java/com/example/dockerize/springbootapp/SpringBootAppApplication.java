@@ -18,6 +18,6 @@ public class SpringBootAppApplication {
 	@GetMapping()
 	public String getGreeting(){
 
-		return "Hello spring boot new app";
+		return "Hello spring boot app";
 	}
 }
