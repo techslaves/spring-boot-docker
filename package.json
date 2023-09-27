@@ -1,0 +1,29 @@
+{
+  "name": "spring-boot-docker",
+  "private": true,
+  "release": {
+    "branches": [
+      "master",
+      {
+        "name": "uat",
+        "prerelease": true
+      }
+    ]
+  },
+  "version": "0.0.0-uat",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "semantic-release": "^22.0.5"
+  },
+  "dependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/release-notes-generator": "^12.0.0"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/techslaves/spring-boot-docker.git"
+  }
+}
