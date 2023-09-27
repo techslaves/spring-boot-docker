@@ -10,7 +10,7 @@
       }
     ]
   },
-  "version": "0.0.0-uat",
+  "version": "0.0.0",
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "semantic-release": "^22.0.5"
