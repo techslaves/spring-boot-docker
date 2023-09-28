@@ -6,7 +6,7 @@ on:
       - beta
 
 permissions:
-  contents: read # for checkout
+  contents: read # for code checkout
 
 jobs:
   release:
