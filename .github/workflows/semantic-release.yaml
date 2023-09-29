@@ -33,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export NEXT_TAG_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
-          echo "new_tag_version=${NEXT_TAG_VERSION}" >> $GITHUB_OUTPUT
+          echo "new_tag_version=${NEXT_TAG_VERSION}" >> "$GITHUB_OUTPUT"
           echo $NEXT_TAG_VERSION
       - name: semantic-release
         env:
@@ -48,4 +48,4 @@ jobs:
       steps:
        - name: Print Release number
          run: |
-          echo "Release number is ::::::" ${{ steps.build-image.outputs.IMAGE }}
+          echo "Release number is ::::::" ${{ needs.release.outputs.new_tag_version }}
