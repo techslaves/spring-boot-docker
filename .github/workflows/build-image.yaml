@@ -39,7 +39,7 @@ jobs:
           flavor: |
             latest=auto
           tags: |
-            type=semver,pattern={{version}}
+            type=pep440,pattern={{raw}}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Login to Docker Hub
