@@ -36,14 +36,14 @@ jobs:
         docker build --platform "linux/amd64" -t utsavgarg007/spring-boot-docker:$VERSION_READABLE .
         echo "::set-output name=IMAGE::utsavgarg007/spring-boot-docker:$VERSION_READABLE"
 
-     - uses: trstringer/manual-approval@v1
-       with:
+      - uses: trstringer/manual-approval@v1
+        with:
           secret: ${{ github.TOKEN }}
           approvers: techslaves
 
-     - name: Run Trivy vulnerability scanner
-       uses: aquasecurity/trivy-action@master
-       with:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
           image-ref: '${{ steps.build-image.outputs.IMAGE }}'
           format: 'table'
           exit-code: '0'
