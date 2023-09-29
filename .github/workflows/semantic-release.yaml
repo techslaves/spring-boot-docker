@@ -41,4 +41,4 @@ jobs:
       steps:
        - name: Print Release number
          run: |
-          echo "Release number is ::::::" ${{ needs.release.outputs.new_tag_version }}
+          echo "${{ needs.release.outputs.new_tag_version }}"
