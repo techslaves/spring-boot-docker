@@ -39,6 +39,6 @@ jobs:
       runs-on: ubuntu-latest
       needs: release
       steps:
-       - name: Print Release number
-         run: |
-          echo "${{ needs.release.outputs.NEXT_TAG_VERSION }}"
+        - name: Print Release number
+          run: |
+            echo "${{ needs.release.outputs.NEXT_TAG_VERSION }}"
