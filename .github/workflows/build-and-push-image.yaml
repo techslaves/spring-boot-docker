@@ -37,7 +37,7 @@ jobs:
           images: |
             utsavgarg007/spring-boot-app
           tags: |
-            type=semver,pattern={{raw}}
+            type=raw,value=latest,enable=true type=semver,pattern={{version}}
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
     - name: Login to Docker Hub
