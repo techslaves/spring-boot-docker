@@ -24,4 +24,3 @@ jobs:
         issuetype: Task
         summary: "Test"
         description: "Description"
-        fields: '{"release": "v1.1.1"}'
