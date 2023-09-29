@@ -24,4 +24,4 @@ jobs:
         issuetype: Task
         summary: "Test"
         description: "Description"
-        fields: '{"labels": "v1.1.1"}'
+        fields: '{"release": "v1.1.1"}'
