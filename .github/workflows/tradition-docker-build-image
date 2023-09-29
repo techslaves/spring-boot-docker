@@ -1,0 +1,53 @@
+name: Build-docker-image
+on:
+  push:
+    branches:
+      - 'master'
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - 'master'
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets. DOCKER_PASSWORD }}
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+         fetch-depth: 0
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: |
+          cd spring-boot-app
+          mvn -B package --file pom.xml
+      - name: Build and push docker image to DockerHub
+       id: build-image
+       run: | 
+        VERSION_READABLE=$(git describe --tag)
+        docker build --platform "linux/amd64" -t utsavgarg007/spring-boot-docker:$VERSION_READABLE .
+        echo "::set-output name=IMAGE::utsavgarg007/spring-boot-docker:$VERSION_READABLE"
+
+     - uses: trstringer/manual-approval@v1
+       with:
+          secret: ${{ github.TOKEN }}
+          approvers: techslaves
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+          image-ref: '${{ steps.build-image.outputs.IMAGE }}'
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          output: ${{ steps.date.outputs.date }}
+          severity: 'CRITICAL,HIGH'
