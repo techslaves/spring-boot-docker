@@ -33,7 +33,7 @@ jobs:
           images: |
             utsavgarg007/spring-boot-app
           tags: |
-            type=raw,value=latest,enable=true
+            type=raw,value=$(git describe --tag),enable=true
             type=semver,pattern={{version}}
     - name: Build with Maven
       run: |
