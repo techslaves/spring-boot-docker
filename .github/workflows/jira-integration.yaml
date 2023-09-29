@@ -24,3 +24,4 @@ jobs:
         issuetype: Task
         summary: "Test"
         description: "Description"
+        fields: '{"tag": "test"}'
