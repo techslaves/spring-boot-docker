@@ -13,6 +13,8 @@ jobs:
        issues: write # to be able to comment on released issues
        pull-requests: write # to be able to comment on released pull requests
        id-token: write # to enable use of OIDC for npm provenance
+    outputs:
+      new_tag_version: ${{ steps.tag_version.outputs.new_tag_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -23,6 +25,7 @@ jobs:
         with:
           node-version: "lts/*"
       - name: semantic-release-dry-run
+        id: tag_version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -41,4 +44,4 @@ jobs:
       steps:
         - name: Print Release number
           run: |
-            echo "${{ needs.release.outputs.NEXT_TAG_VERSION }}"
+            echo ${{ needs.release.outputs.new_tag_version }}
