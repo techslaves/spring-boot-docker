@@ -15,6 +15,7 @@ jobs:
        id-token: write # to enable use of OIDC for npm provenance
     outputs:
       new_tag_version: ${{ steps.tag_version.outputs.new_tag_version }}
+      release_notes: ${{ steps.tag_version.outputs.release_notes }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
