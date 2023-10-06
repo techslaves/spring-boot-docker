@@ -33,18 +33,8 @@ jobs:
           export NEXT_TAG_VERSION=$(npx semantic-release --dry-run | grep 'The next release version is' | sed -E 's/.* ([[:digit:].]+)$/\1/')
           echo "new_tag_version=${NEXT_TAG_VERSION}" >> "$GITHUB_OUTPUT"
           echo $NEXT_TAG_VERSION 
-          
-          export RELEASE_NOTES=$(npx semantic-release --dry-run | awk '/Release note for version/,EOF')
-          echo "release_notes=${RELEASE_NOTES}" >> "$GITHUB_OUTPUT"
-          echo $RELEASE_NOTES
 
-          echo "release_notes=${npx semantic-release --dry-run | awk '/Release note for version/,EOF'}" >> "$GITHUB_OUTPUT"
-      - name: Get color
-        env:
-          RELEASE_NOTES: ${{ steps.tag_version.outputs.RELEASE_NOTES }}
-        run: $RELEASE_NOTES   
-          
-          
+          echo "release_notes=${npx semantic-release --dry-run | awk '/Release note for version/,EOF'}" >> "$GITHUB_OUTPUT"         
   print-sematic-variables:
       name: Print variables
       runs-on: ubuntu-latest
