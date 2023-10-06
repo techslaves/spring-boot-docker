@@ -41,7 +41,6 @@ jobs:
             {
             echo 'RELEASE_NOTES<<EOF'
             npx semantic-release --dry-run | awk '/Release note for version/,EOF'
-            echo EOF
           } >> "$GITHUB_ENV"
           
           echo "release_notes=${npx semantic-release --dry-run | awk '/Release note for version/,EOF'}" >> "$GITHUB_OUTPUT"
