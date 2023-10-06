@@ -37,6 +37,20 @@ jobs:
           export RELEASE_NOTES=$(npx semantic-release --dry-run | awk '/Release note for version/,EOF')
           echo "release_notes=${RELEASE_NOTES}" >> "$GITHUB_OUTPUT"
           echo $RELEASE_NOTES
+
+            {
+            echo 'RELEASE_NOTES<<EOF'
+            npx semantic-release --dry-run | awk '/Release note for version/,EOF'
+            echo EOF
+          } >> "$GITHUB_ENV"
+          
+          echo "release_notes=${npx semantic-release --dry-run | awk '/Release note for version/,EOF'}" >> "$GITHUB_OUTPUT"
+      - name: Get color
+        env:
+          RELEASE_NOTES: ${{ steps.tag_version.outputs.RELEASE_NOTES }}
+        run: $RELEASE_NOTES   
+          
+          
   print-sematic-variables:
       name: Print variables
       runs-on: ubuntu-latest
