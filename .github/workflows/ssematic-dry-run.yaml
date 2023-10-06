@@ -34,7 +34,7 @@ jobs:
           echo "new_tag_version=${NEXT_TAG_VERSION}" >> "$GITHUB_OUTPUT"
           echo $NEXT_TAG_VERSION 
 
-          echo "release_notes=${npx semantic-release --dry-run | awk '/Release note for version/,EOF'}" >> "$GITHUB_OUTPUT"         
+          echo "release_notes=${npx semantic-release --dry-run | awk '/Release note for version/'}" >> "$GITHUB_OUTPUT"         
   print-sematic-variables:
       name: Print variables
       runs-on: ubuntu-latest
