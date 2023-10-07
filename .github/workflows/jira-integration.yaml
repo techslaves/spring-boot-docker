@@ -4,44 +4,30 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    outputs:
+      new_tag_version: ${{ steps.notes.outputs.release_notes }}
     steps:
-    - name: Jira Create issue
-      run: |
-
-        curl -L -H "Accept: application/vnd.github+json" \
+    - name: Get Release notes
+      id: notes
+      run: |   
+        notes=`curl -L -H "Accept: application/vnd.github+json" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
-        https://api.github.com/repos/techslaves/spring-boot-docker/releases/latest > release.txt
-        
-        curl --request POST \
-        --url 'https://utsav-garg.atlassian.net/rest/api/3/issue' \
-        --user '${{ secrets.JIRA_USER_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}' \
-        --header 'Accept: application/json' \
-        --header 'Content-Type: application/json' \
-        --data '{
-          "fields": {
-             "project":
-             {
-                "id": "10000"
-             },
-             "customfield_10035": "v1.1.1",
-             "summary": "Test Summary.",
-             "description": {
-                "type": "doc",
-                "version": 1,
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": `cat release.txt`
-                      }
-                    ]
-                  }
-                ]
-              },
-             "issuetype": {
-                "id": "10001"
-             }
-           }
-        }'
+        https://api.github.com/repos/techslaves/spring-boot-docker/releases/latest | jq -r '.body'`
+        echo "release_notes=${notes}" >> "$GITHUB_OUTPUT"
+        echo $release_notes
+    
+    - name: Jira Login
+      uses: atlassian/gajira-login@v3
+      env:
+        JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+        JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
+    - name: Jira Create issue
+      uses: atlassian/gajira-create@v3
+      with:
+        project: CR
+        issuetype: Task
+        summary: ${{ steps.notes.outputs.release_notes }}
+        description: "Description"
+        fields: '{"tag": "test"}'
