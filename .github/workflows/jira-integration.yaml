@@ -45,8 +45,8 @@ jobs:
                      }
                    }
                 }
-        EOF
-        }
+         EOF
+         }
 
         echo $(generate_post_data)
         
@@ -55,4 +55,4 @@ jobs:
         --user '${{ secrets.JIRA_USER_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}' \
         --header 'Accept: application/json' \
         --header 'Content-Type: application/json' \
-        --data '$(generate_post_data)'
+        --data "$(generate_post_data)"
