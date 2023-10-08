@@ -9,40 +9,47 @@ jobs:
       run: |
         notes=$(curl -L -H "Accept: application/vnd.github+json" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
-        https://api.github.com/repos/techslaves/spring-boot-docker/releases/latest | jq -r '.body'| sed 's/##//' | sed 's/#//') 
+        https://api.github.com/repos/techslaves/spring-boot-docker/releases/latest | jq -r '.body') 
         echo "##################"
         echo $notes
+
+        generate_post_data()
+        {
+          cat <<EOF
+        {
+            "fields": {
+                     "project":
+                     {
+                        "id": "10000"
+                     },
+                     "customfield_10035": "v1.1.1",
+                     "summary": "Test Summary.",
+                     "description": {
+                        "type": "doc",
+                        "version": 1,
+                        "content": [
+                          {
+                            "type": "paragraph",
+                            "content": [
+                              {
+                                "type": "text",
+                                "text": "$notes"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                     "issuetype": {
+                        "id": "10001"
+                     }
+                   }
+                }
+        EOF
+        }
 
         curl --request POST \
         --url 'https://utsav-garg.atlassian.net/rest/api/3/issue' \
         --user '${{ secrets.JIRA_USER_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}' \
         --header 'Accept: application/json' \
         --header 'Content-Type: application/json' \
-        --data '{
-          "fields": {
-             "project":
-             {
-                "id": "10000"
-             },
-             "customfield_10035": "v1.1.1",
-             "summary": "No REST for the Wicked.",
-             "description": {
-                "type": "doc",
-                "version": 1,
-                "content": [
-                  {
-                    "type": "paragraph",
-                    "content": [
-                      {
-                        "type": "text",
-                        "text": $notes
-                      }
-                    ]
-                  }
-                ]
-              },
-             "issuetype": {
-                "id": "10001"
-             }
-           }
-        }'
+        --data "$(generate_post_data)"
