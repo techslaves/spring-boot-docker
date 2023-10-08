@@ -4,8 +4,6 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    outputs:
-      new_tag_version: ${{ steps.notes.outputs.release_notes }}
     steps:
     - name: Print notes
       run: |
@@ -46,8 +44,8 @@ jobs:
              "issuetype": {
                 "id": "10001"
              }
-         }
-      }'
+           }
+        }'
     
     - name: Jira Login
       uses: atlassian/gajira-login@v3
