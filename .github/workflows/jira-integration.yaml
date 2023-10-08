@@ -1,3 +1,4 @@
+
 on: 
   workflow_dispatch:
   
@@ -10,10 +11,10 @@ jobs:
     - name: Get Release notes
       id: notes
       run: |   
-        `curl -L -H "Accept: application/vnd.github+json" \
+        notes=`curl -L -H "Accept: application/vnd.github+json" \
         -H "X-GitHub-Api-Version: 2022-11-28" \
-        https://api.github.com/repos/techslaves/spring-boot-docker/releases/latest | jq -r '.body'` > release.txt
-        echo "release_notes=`cat release.txt`" >> "$GITHUB_OUTPUT"
+        https://api.github.com/repos/techslaves/spring-boot-docker/releases/latest | jq -r '.body'` | sed 's/##//'
+        echo "release_notes=${notes}" >> "$GITHUB_OUTPUT"
         echo $release_notes
     
     - name: Jira Login
