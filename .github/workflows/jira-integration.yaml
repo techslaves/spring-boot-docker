@@ -15,7 +15,7 @@ jobs:
 
         curl --request POST \
         --url 'https://utsav-garg.atlassian.net/rest/api/3/issue' \
-        --user 'er.utsavgarg@gmail.com:ATATT3xFfGF0lWpbQsLm7AxsfhlhN004j1g_btN1J_4t2CqqccZ7nC6N3-H-sjjg_gBdP4Wxut47TR4MW7GkCjhvgrMh2DA0gF0uL2k0PbCA87XQPLbijISXIOiug3pgLhOGvgd6KB30euZS-qK2nf0D43fZ9tuoohpqZCLx-5IaG-dFJwDgv2U=983B797E' \
+        --user '${{ secrets.JIRA_USER_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}' \
         --header 'Accept: application/json' \
         --header 'Content-Type: application/json' \
         --data '{
