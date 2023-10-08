@@ -16,6 +16,10 @@ jobs:
         https://api.github.com/repos/techslaves/spring-boot-docker/releases/latest | jq -r '.body'` | sed 's/##//'
         echo "release_notes=${notes}" >> "$GITHUB_OUTPUT"
         echo $release_notes
+
+    - name: Print notes
+      run: | 
+        echo ${{ steps.notes.outputs.release_notes }}
     
     - name: Jira Login
       uses: atlassian/gajira-login@v3
