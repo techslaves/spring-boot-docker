@@ -31,4 +31,4 @@ jobs:
         issuetype: Task
         summary: ${{ steps.notes.outputs.release_notes }}
         description: "Description"
-        fields: '{"tag": "test"}'
+        fields: '{"customfield_10035": "v1.1.2"}'
