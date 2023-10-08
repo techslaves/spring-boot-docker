@@ -17,6 +17,8 @@ jobs:
         https://api.github.com/repos/techslaves/spring-boot-docker/releases/latest | jq -r '.body') 
         echo "release_notes=${notes}" >> "$GITHUB_OUTPUT"
         echo $release_notes
+        echo "##################"
+        echo $notes
 
     - name: Print notes
       run: | 
