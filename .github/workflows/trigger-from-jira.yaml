@@ -1,0 +1,12 @@
+name: triggered-from-jira
+on: 
+  repository_dispatch:
+  
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigerred from JIRA
+      run: |
+         'echo "field: ${{ github.event.client_payload.foo }}"'
+         'echo "payload: ${{ toJson(github.event.client_payload) }}"'
