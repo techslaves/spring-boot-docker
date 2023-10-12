@@ -1,6 +1,6 @@
-name: triggered-from-jira
+name: trigger-from-jira
 on: 
-  workflow_dispatch:
+  repository_dispatch:
   
 jobs:
   build-and-push:
