@@ -1,0 +1,11 @@
+name: trigger-from-jira-dispatch
+on: 
+  repository_dispatch:
+    types: [test_result]
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigerred from JIRA
+      run: |
+         echo "Image Tags"
