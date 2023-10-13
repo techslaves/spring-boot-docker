@@ -1,7 +1,10 @@
 name: trigger-from-jira
 on: 
   workflow_dispatch:
-  
+    inputs:
+      tags:
+        description: 'Docker Image tag'
+        required: true  
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
