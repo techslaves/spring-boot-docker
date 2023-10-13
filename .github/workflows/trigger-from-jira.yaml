@@ -11,5 +11,4 @@ jobs:
     steps:
     - name: Trigerred from JIRA
       run: |
-         echo "field: ${{ github.event.client_payload.foo }}"
-         echo "payload: ${{ toJson(github.event.client_payload) }}"
+         echo "Image Tags: ${{ inputs.tags }}"
