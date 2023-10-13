@@ -1,11 +1,12 @@
-name: trigger-from-jira-dispatch
-on: 
-  repository_dispatch:
-    types: [test_result]
+name: example-client-payload-action
+on: repository_dispatch
 jobs:
-  build-and-push:
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
-    - name: Trigerred from JIRA
-      run: |
-         echo "Image Tags"
+      - uses: actions/checkout@v1
+      - run: 'echo "field: ${{ github.event.client_payload.foo }}"'
+      - run: 'echo "payload: ${{ toJson(github.event.client_payload) }}"'
+      - run: echo baz
+        if: github.event.action == 'baz'
