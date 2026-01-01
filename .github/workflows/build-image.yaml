@@ -53,5 +53,5 @@ jobs:
          context: spring-boot-app
          platforms: linux/amd64,linux/arm64
          push: true
-         tags: ${{ steps.meta.outputs.tags }}
+         tags: ${{ github.sha }}
          labels: ${{ steps.meta.outputs.labels }}
