@@ -64,4 +64,4 @@ jobs:
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: utsavgarg007/spring-boot-app:${{ github.sha }}
-          subject-digest: ${{ steps.build.outputs.digest }}
+          subject-digest: ${{ github.sha }}
