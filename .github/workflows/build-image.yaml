@@ -52,6 +52,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push
         uses: docker/build-push-action@v5
+        id: build
         with:
          context: spring-boot-app
          platforms: linux/amd64,linux/arm64
@@ -67,4 +68,4 @@ jobs:
         uses: actions/attest-build-provenance@v1
         with:
           subject-name: utsavgarg007/spring-boot-app:${{ github.sha }}
-          subject-digest: ${{ github.sha }}
+          subject-digest: ${{ steps.build.outputs.digest }}
