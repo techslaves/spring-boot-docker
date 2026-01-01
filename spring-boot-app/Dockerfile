@@ -1,4 +1,4 @@
-FROM openjdk:11
+FROM eclipse-temurin:11-jre
 VOLUME /tmp
 EXPOSE 8080
 ARG JAR_FILE=target/spring-boot-docker.jar
