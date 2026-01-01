@@ -10,6 +10,7 @@ on:
       - 'master'
 permissions:
   id-token: write
+  attestations: write
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
