@@ -24,22 +24,31 @@ jobs:
         uses: actions/checkout@v4
         with:
          fetch-depth: 0
+         
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+          
       - name: Build with Maven
         run: |
           cd spring-boot-app
           mvn -B package --file pom.xml
+
+      - name: Generate SLSA Provenance for JAR
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: spring-boot-app/target/*.jar
+          
       - name: Upload Jar atifact
         uses: actions/upload-artifact@v4
         with:
           name: build-output
           path: spring-boot-app/target/*.jar
           retention-days: 7
+          
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
@@ -50,13 +59,16 @@ jobs:
             latest=auto
           tags: |
             type=pep440,pattern={{raw}}
+            
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+        
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          
       - name: Build and push
         uses: docker/build-push-action@v5
         id: build
@@ -66,13 +78,10 @@ jobs:
          push: true
          tags: utsavgarg007/spring-boot-app:${{ github.sha }}
          labels: ${{ steps.meta.outputs.labels }}
+         
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3
+        
       - name: Sign image with Cosign (keyless)
         run: |
           cosign sign --yes utsavgarg007/spring-boot-app:${{ github.sha }}
-      - name: Generate SLSA Provenance
-        uses: actions/attest-build-provenance@v1
-        with:
-          subject-name: utsavgarg007/spring-boot-app:${{ github.sha }}
-          subject-digest: ${{ steps.build.outputs.digest }}
